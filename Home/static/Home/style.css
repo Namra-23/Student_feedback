@@ -1,53 +1,119 @@
 .bg-crimson {
-    background-color: #57a7dca6;
+  background-color: #57a7dca6;
 }
 
 .bg-crimson a {
-    color: #000000;
+  color: #000000;
 }
 
 .bg-crimson p {
-    color: #000000;
+  color: #000000;
 }
 
-.bgimg{
-    background-color: #57a7dca6;
-    padding: 27px;
-    margin-left: 175px;
-    margin-right: 175px;
-    border-radius: 20px;
-    margin-top: 20px;
+.bgimg {
+  background-color: #57a7dca6;
+  padding: 27px;
+  margin-left: 175px;
+  margin-right: 175px;
+  border-radius: 20px;
+  margin-top: 20px;
 }
 
 body {
-    height: 100%;
-    /* background: url("/static/Home/hey.jpg") no-repeat; */
-    /* background-color: rgb(233, 236, 239); */
-    /* background: linear-gradient(rgba(233, 236, 239,0.1),url("/static/Home/ddu.jpg") no-repeat); */
-    background-size: 100% 100%;
+  height: 100%;
+  /* background: url("/static/Home/hey.jpg") no-repeat; */
+  /* background-color: rgb(233, 236, 239); */
+  /* background: linear-gradient(rgba(233, 236, 239,0.1),url("/static/Home/ddu.jpg") no-repeat); */
+  background-size: 100% 100%;
 }
 
 html {
-    height: 100%;
+  height: 100%;
 }
 
 #page-content {
-    /* color: #ffffff; */
-    flex: 1 0 auto;
-    padding-top: 114px;
+  /* color: #ffffff; */
+  flex: 1 0 auto;
+  padding-top: 114px;
 }
 
 #sticky-footer {
-    flex-shrink: none;
-    height: 85px;
-    color: #000000;
+  flex-shrink: none;
+  height: 85px;
+  color: #000000;
 }
 
-.backgrounfdbox{
-    background-color: #57a7dca6;
-    padding: 10px 27px 27px 27px;
-    margin-left: 75px;
-    margin-right: 75px;
-    border-radius: 20px;
-    margin-top: 15px;
+.backgrounfdbox {
+  background-color: #57a7dca6;
+  padding: 10px 27px 27px 27px;
+  margin-left: 75px;
+  margin-right: 75px;
+  border-radius: 20px;
+  margin-top: 15px;
+}
+
+a {
+  border: none;
+  color: black;
+  text-align: center;
+  transition: 0.3s;
+}
+
+a:hover {
+  color: white;
+}
+
+p{
+    font-size: large;
+}
+
+.about-us{
+    margin-left: 350px;
+    margin-right: 350px;
+}
+
+.flex {
+  display: flex;
+}
+.justify-start {
+  justify-content: flex-start;
+}
+
+.justify-end {
+  justify-content: flex-end;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+.justify-right {
+  justify-content: right;
+}
+
+.justify-around {
+  justify-content: space-around;
+}
+
+.justify-evenly {
+  justify-content: space-evenly;
+}
+
+.justify-items-start {
+  justify-items: start;
+}
+
+.justify-items-end {
+  justify-items: end;
+}
+
+.justify-items-center {
+  justify-items: center;
+}
+
+.justify-items-stretch {
+  justify-items: stretch;
 }

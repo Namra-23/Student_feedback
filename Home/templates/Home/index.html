@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
     <!-- Custom CCS -->
-    <link rel="stylesheet" href="{% static 'Home/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'Home/style.css' %}">
 
     <title>Student feedback system</title>
 </head>
@@ -29,6 +29,10 @@
         <div class="container-fluid">
             <!-- Logo/Text -->
             <a class="navbar-brand" href="{% url 'HomeView' %}">Student feedback system</a>
+            <div class="flex justify-right no-style">
+                <a class="navbar-brand link" href="{% url 'AboutUs'%}">About Us</a>
+                <a class="navbar-brand link" href="{% url 'ContactUs'%}">Contact Us</a>
+            </div>
         </div>
     </nav>
 
