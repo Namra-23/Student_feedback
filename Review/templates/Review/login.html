@@ -1,11 +1,10 @@
 {% extends 'Home/index.html' %}
-{% load crispy_forms_tags %}
 {% block content %}
     <div class = "backgrounfdbox" style="margin-top: 10px; margin-left:575px; margin-right: 575px;">
         <form method="POST">
             {% csrf_token %}
             <legend class="text-center mt-4">Login as admin</legend>
-            {{ form|crispy }}
+            
             <div class="form-group">
                 <button class="btn btn-primary" type="submit">Login</button>
             </div>
