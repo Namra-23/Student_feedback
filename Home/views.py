@@ -7,8 +7,7 @@ import json
 
 class HomeView(TemplateView):
     template_name = 'Home/home.html'
-
-
+    
 # for autocomplete on the search field on ListFeedbackView
 def get_teachers(request):
 
