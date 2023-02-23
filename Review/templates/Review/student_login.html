@@ -3,10 +3,10 @@
     <div class = "backgrounfdbox" style="margin-top: 10px; margin-left:575px; margin-right: 575px;">
         <form method="POST">
             {% csrf_token %}
-            <legend class="text-center mt-4" Required>Login as Student</legend>
-            <div class="form-group">
-                <button class="btn btn-primary" type="submit">Login</button>
-            </div>
+            <legend class="text-center mt-4">Login as Student</legend>
+            <input type="email" name="gmail" placeholder="Email...." class="form-control" required>
+            <input type="password" name="password" placeholder="password" class="form-control" required>
+            <button class="btn btn-primary" type="submit">Login</button>
         </form>
         <a href="{% url 'HomeView' %}">Home</a>
     </div>

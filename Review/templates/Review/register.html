@@ -2,9 +2,6 @@
 
 <form action="" method="post">
     {% csrf_token %}
-    {{form.name.lable}}
-    {{form.name}}
-    {{form.gmail.lable}}
-    {{form.gmail}}
+    {{form.as_p}}
     <input type="submit" name="create User">
 </form>

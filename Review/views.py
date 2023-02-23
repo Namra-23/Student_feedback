@@ -1,10 +1,14 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.views.generic import ListView, DetailView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from Feedback.models import FeedbackData
-from .forms import UserForm
+from Feedback.views import GetFeedbackView
+from .forms import UserForm,LoginForm
+from django.contrib import messages
+from django.contrib.auth import login,authenticate
+from .models import User
 
 class ListFeedbackView(LoginRequiredMixin, ListView):
     model = FeedbackData
@@ -14,6 +18,16 @@ class ListFeedbackView(LoginRequiredMixin, ListView):
     paginate_by = 10
 
 def loginPage(request):
+    if request.method == 'POST':
+        email = request.POST.get('gmail')
+        password = request.POST.get('password')
+        login_form = LoginForm()
+        user = User.GetUserByEmail(email)
+        if user is not None:
+            if user.password == password:
+                return redirect('GetFeedbackView')
+        else:
+            messages.info(request, 'Username or password is incorrect')
     context = {}
     return render(request,'Review/student_login.html',context)
 
@@ -24,6 +38,10 @@ def registerPage(request):
         form = UserForm(request.POST)
         if form.is_valid():
             form.save()
+            user = form.cleaned_data.get('name')
+            # messages.success(request, "Account is created for " + user)
+            
+            return redirect('LoginPage')
     
     context = {'form' : form}
     return render(request,'Review/register.html',context)
