@@ -1,7 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from Home.models import Teacher
-
+from Review.models import Faculty
 
 class FeedbackData(models.Model):
 
@@ -15,8 +15,9 @@ class FeedbackData(models.Model):
 
     date_submitted = models.DateTimeField(auto_now=True)
 
-    teacher_name = models.ForeignKey(Teacher, verbose_name='Name of Teacher',
+    teacher_name = models.ForeignKey(Faculty, verbose_name='Name of Teacher',
                                      on_delete=models.CASCADE)
+
 
     punctuality = models.CharField(verbose_name='The teacher is punctual in coming to class',
                                    max_length=225,

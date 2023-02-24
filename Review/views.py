@@ -1,14 +1,20 @@
+from multiprocessing import context
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404, redirect, render
 from django.shortcuts import render,redirect
 from django.views.generic import ListView, DetailView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from Feedback.models import FeedbackData
+from .forms import UserForm,FacultyForm
+from .models import Faculty, Subject,Semester
 from Feedback.views import GetFeedbackView
 from .forms import UserForm,LoginForm
 from django.contrib import messages
 from django.contrib.auth import login,authenticate
 from .models import User
+from django.views.generic import TemplateView
 
 class ListFeedbackView(LoginRequiredMixin, ListView):
     model = FeedbackData
@@ -16,6 +22,11 @@ class ListFeedbackView(LoginRequiredMixin, ListView):
     context_object_name = 'feedbacks'
     ordering = ['-date_submitted']
     paginate_by = 10
+    
+def FacultyView(request):
+    # template_name = 'Review/faculty_login.html'
+    context={}
+    return render(request, 'Review/faculty_login.html',context)
 
 def loginPage(request):
     if request.method == 'POST':
@@ -45,6 +56,35 @@ def registerPage(request):
     
     context = {'form' : form}
     return render(request,'Review/register.html',context)
+
+
+def facultyRegister(request):
+    form = FacultyForm()
+
+    if request.method == 'POST':
+        form = FacultyForm(request.POST)
+        if form.is_valid():
+            form.save()
+    
+    context = {'form' : form}
+    return render(request,'Review/faculty_registration.html',context)
+
+def faculty_update_view(request, pk):
+    faculty = get_object_or_404(Faculty, pk=pk)
+    form = FacultyForm(instance=faculty)
+    if request.method == 'POST':
+        form = FacultyForm(request.POST, instance=faculty)
+        if form.is_valid():
+            form.save()
+            return redirect('faculty_change', pk=pk)
+    context = {'form' : form}
+    return render(request,'Review/faculty_registration.html',context)
+
+def load_subjects(request):
+    sem_id = request.GET.get('sem_id')
+    subjects = Subject.objects.filter(semester_id=sem_id)
+    return render(request, 'Review/subject_dropdown_list_options.html', {'subjects': subjects})
+    # return JsonResponse(list(subjects.values('id', 'name')), safe=False)
 
 class SearchResultsView(LoginRequiredMixin, ListView):
     model = FeedbackData
