@@ -13,7 +13,7 @@ from Feedback.views import GetFeedbackView
 from .forms import UserForm,LoginForm
 from django.contrib import messages
 from django.contrib.auth import login,authenticate
-from .models import User
+from .models import User,Faculty
 from django.views.generic import TemplateView
 
 class ListFeedbackView(LoginRequiredMixin, ListView):
@@ -25,6 +25,17 @@ class ListFeedbackView(LoginRequiredMixin, ListView):
     
 def FacultyView(request):
     # template_name = 'Review/faculty_login.html'
+    if request.method == 'POST':
+        email = request.POST.get('gmail')
+        password = request.POST.get('password')
+        login_form = LoginForm()
+        user = Faculty.GetUserByEmail(email)
+        if user is not None:
+            if user.password == password:
+                return redirect('GetFeedbackView')
+                # return render(request, 'Review/1.html',context)
+        else:
+            messages.info(request, 'Username or password is incorrect')
     context={}
     return render(request, 'Review/faculty_login.html',context)
 

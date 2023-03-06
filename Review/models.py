@@ -12,12 +12,20 @@ class User(models.Model):
             return User.objects.get(gmail=gmail)
         except:
             return False
+    
+    def __str__(self):
+        return self.name
+    
 
 class Semester(models.Model):
     name=models.CharField(max_length=5)
 
     def __int__(self):
         return self.name
+    
+    def __str__(self):
+        return self.name
+    
     
 class Subject(models.Model):
     semester=models.ForeignKey(Semester, on_delete=models.CASCADE)
@@ -52,3 +60,9 @@ class Faculty(models.Model):
 
     def __str__(self):
         return self.name
+    
+    def GetUserByEmail(gmail):
+        try:
+            return Faculty.objects.get(gmail=gmail)
+        except:
+            return False
