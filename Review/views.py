@@ -16,24 +16,50 @@ from django.contrib.auth import login,authenticate
 from .models import User,Faculty
 from django.views.generic import TemplateView
 
+# For all Faculties
 class ListFeedbackView(LoginRequiredMixin, ListView):
     model = FeedbackData
     template_name = 'Review/list_feedback.html'
     context_object_name = 'feedbacks'
     ordering = ['-date_submitted']
     paginate_by = 10
+
+# For particular Faculty
+class FacultyFeedbackList(ListView):
     
+    model = FeedbackData
+    template_name = 'Review/faculty_feedback.html'
+    context_object_name = 'feedbacks'
+    ordering = ['-date_submitted']
+    paginate_by = 10
+    email = None
+    def get_queryset(self):
+        # email = self.request.POST.get('gmail')
+        # print(request.method)
+        print("helloooooooooooooo ",FacultyFeedbackList.email)
+        user = Faculty.GetUserByEmail(FacultyFeedbackList.email)
+        object_list = FeedbackData.objects.filter(teacher_name__name__icontains=user.name)
+        object_list = object_list.order_by('-date_submitted')
+        return object_list
+    @staticmethod
+    def setEmail(email):
+        print("hi",email)
+        FacultyFeedbackList.email=email
+
+# For Faculty login
 def FacultyView(request):
     # template_name = 'Review/faculty_login.html'
     if request.method == 'POST':
         email = request.POST.get('gmail')
+        print(email)
+        FacultyFeedbackList().setEmail(email)
         password = request.POST.get('password')
         login_form = LoginForm()
         user = Faculty.GetUserByEmail(email)
         if user is not None:
             if user.password == password:
-                return redirect('GetFeedbackView')
-                # return render(request, 'Review/1.html',context)
+                return redirect('FacultyFeedbackList')
+                # return render(request, 'Review/faculty_feedback.html')
         else:
             messages.info(request, 'Username or password is incorrect')
     context={}
