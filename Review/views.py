@@ -136,8 +136,14 @@ class SearchResultsView(LoginRequiredMixin, ListView):
         object_list = object_list.order_by('-date_submitted')
         return object_list
 
-
+# For admin
 class FeedbackDetailView(LoginRequiredMixin, DetailView):
+    model = FeedbackData
+    template_name = 'Review/detail_feedback.html'
+    context_object_name = 'feedback'
+
+# For faculty
+class FacultyFeedback(DetailView):
     model = FeedbackData
     template_name = 'Review/detail_feedback.html'
     context_object_name = 'feedback'

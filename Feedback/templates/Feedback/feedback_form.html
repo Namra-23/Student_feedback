@@ -1,12 +1,13 @@
 {% extends 'Home/index.html' %}
-{% load crispy_forms_tags %}
+{% comment %} {% load crispy_forms_tags %} {% endcomment %}
 {% block content %}
     <div class="container">
         <form method="POST">
             {% csrf_token %}
             <legend class="text-center mt-4">Feedback Form</legend>
             <p class="text-muted">* compulsory</p>
-            {{ form|crispy }}
+            {% comment %} {{ form|crispy }} {% endcomment %}
+            {{form.as_p}}
             <div class="form-group">
                 <button class="btn btn-dark" type="submit">Submit Feedback</button>
             </div>
