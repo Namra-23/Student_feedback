@@ -1,15 +1,16 @@
-{% extends 'Home/index.html' %}
-{% load crispy_forms_tags %}
-{% block content %}
-    <div class = "backgrounfdbox" style="margin-top: 10px; margin-left:575px; margin-right: 575px;">
-        <form method="POST">
-            {% csrf_token %}
-            <legend class="text-center mt-4">Login as admin</legend>
-            {{ form|crispy }}
-            <div class="form-group">
-                <button class="btn btn-primary" type="submit">Login</button>
-            </div>
-        </form>
-        <a href="{% url 'HomeView' %}">Home</a>
+{% extends 'Home/index.html' %} {% block content %}
+<div
+  class="backgrounfdbox"
+  style="margin-top: 10px; margin-left: 575px; margin-right: 575px"
+>
+  <form method="POST">
+    <legend class="text-center mt-4">Login as admin</legend>
+    {% csrf_token %} {{form.as_p}}
+    <div class="form-group">
+      <button class="btn btn-primary" type="submit">Login</button>
     </div>
-{% endblock content %}
+  </form>
+  <a href="{% url 'HomeView' %}">Home</a>
+</div>
+{% endblock content %} {% comment %} {% load crispy_forms_tags %} {% endcomment
+%} {% comment %} {{ form|crispy }} {% endcomment %}

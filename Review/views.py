@@ -1,5 +1,5 @@
 from multiprocessing import context
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.shortcuts import render,redirect
 from django.views.generic import ListView, DetailView, DeleteView
@@ -14,7 +14,10 @@ from .forms import UserForm,LoginForm
 from django.contrib import messages
 from django.contrib.auth import login,authenticate
 from .models import User,Faculty
-from django.views.generic import TemplateView
+
+from django.http import HttpResponse
+from openpyxl import Workbook
+from Feedback.models import FeedbackData
 
 # For all Faculties
 class ListFeedbackView(LoginRequiredMixin, ListView):
@@ -75,8 +78,9 @@ def loginPage(request):
             if user.password == password:
                 return redirect('GetFeedbackView')
         else:
-            messages.info(request, 'Username or password is incorrect')
-    context = {}
+            messages.error(request, 'Username or password is incorrect')
+            return redirect('loginPage')
+    context={}       
     return render(request,'Review/student_login.html',context)
 
 def registerPage(request):
@@ -96,15 +100,25 @@ def registerPage(request):
 
 
 def facultyRegister(request):
-    form = FacultyForm()
-
+    semesters = Semester.objects.all()
+    batches = Faculty.BATCH
     if request.method == 'POST':
         form = FacultyForm(request.POST)
         if form.is_valid():
-            form.save()
-    
-    context = {'form' : form}
-    return render(request,'Review/faculty_registration.html',context)
+            email = form.cleaned_data.get('gmail')
+            print(email)
+            username = form.cleaned_data.get('name')
+            print(username)
+            if Faculty.objects.filter(gmail=email).exists() or User.objects.filter(name=username).exists():
+                return JsonResponse({'status': 'error', 'errors': {'email': ['Email or Username already exists.']}})
+            else:
+                form.save()
+                return JsonResponse({'status': 'success'})
+        else:
+            return JsonResponse({'status': 'error', 'errors': form.errors})
+    else:
+        form = FacultyForm()
+    return render(request, 'Review/faculty_registration.html',{'form': form,'semesters':semesters,'batches':batches}, )
 
 def faculty_update_view(request, pk):
     faculty = get_object_or_404(Faculty, pk=pk)
@@ -122,6 +136,7 @@ def load_subjects(request):
     subjects = Subject.objects.filter(semester_id=sem_id)
     return render(request, 'Review/subject_dropdown_list_options.html', {'subjects': subjects})
     # return JsonResponse(list(subjects.values('id', 'name')), safe=False)
+
 
 class SearchResultsView(LoginRequiredMixin, ListView):
     model = FeedbackData
@@ -162,3 +177,37 @@ def deleteAllFeedback(request):
     context = {}
 
     return render(request, 'Review/delete_success_feedback.html', context)
+
+# Exporting excel
+
+def export_to_excel(request):
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] = 'attachment; filename="feedback_data.xlsx"'
+
+    # Create a new Excel workbook
+    wb = Workbook()
+
+    # Select the active worksheet
+    ws = wb.active
+
+    # Write the header row
+    ws.append(['Teacher Name', 'Semester', 'Punctuality', 'Portion', 'Doubt', 'Interactive', 'Total', 'Average', 'Comments'])
+
+    # Write the data rows
+    for feedback in FeedbackData.objects.all():
+        ws.append([
+            feedback.teacher_name.name,
+            feedback.semester.name if feedback.semester else '',
+            feedback.punctuality,
+            feedback.portion,
+            feedback.doubt,
+            feedback.interactive,
+            feedback.total,
+            feedback.average,
+            feedback.comments
+        ])
+
+    # Save the workbook to the response
+    wb.save(response)
+
+    return response

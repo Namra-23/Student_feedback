@@ -1,16 +1,33 @@
-{% extends 'Home/index.html' %}
-{% block content %}
-    <div class = "backgrounfdbox" style="margin-top: 10px; margin-left:575px; margin-right: 575px;">
-        <form method="POST">
-            {% csrf_token %}
-            <legend class="text-center mt-4">Login as Student</legend>
-            <br />
-            <input type="email" name="gmail" placeholder="Email...." class="form-control" required>
-            <br />
-            <input type="password" name="password" placeholder="password" class="form-control" required>
-            <br />
-            <button class="btn btn-primary" type="submit">Login</button>
-        </form>
-        <a href="{% url 'HomeView' %}">Home</a>
-    </div>
+{% extends 'Home/index.html' %} {% block content %}
+<div
+  class="backgrounfdbox"
+  style="margin-top: 10px; margin-left: 575px; margin-right: 575px"
+>
+  <form method="POST">
+    {% csrf_token %}
+    <legend class="text-center mt-4">Login as Student</legend>
+    <br />
+    <input
+      type="email"
+      name="gmail"
+      placeholder="Email...."
+      class="form-control"
+      required
+    />
+    <br />
+    <input
+      type="password"
+      name="password"
+      placeholder="password"
+      class="form-control"
+      required
+    />
+    <br />
+    <button class="btn btn-primary" type="submit">Login</button>
+    {% if form.errors %}
+    <p>username or password not correct</p>
+    {% endif %}
+  </form>
+  <a href="{% url 'HomeView' %}">Home</a>
+</div>
 {% endblock content %}

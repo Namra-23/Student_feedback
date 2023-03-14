@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import User,Faculty,Semester,Subject
+from .models import Subject, User,Faculty,Semester
 
 # Register your models here.
 admin.site.register(User)

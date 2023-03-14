@@ -1,9 +1,31 @@
+{% extends 'Home/index.html' %}
+{% comment %} {% load crispy_forms_tags %} {% endcomment %}
+{% block content %}
+    <div class="container">
+        <form method="POST">
+            {% csrf_token %}
+            <legend class="text-center mt-4">Feedback Form</legend>
+            <p class="text-muted">* compulsory</p>
+            {% comment %} {{ form|crispy }} {% endcomment %}
+            {{form.as_p}}
+            <div class="form-group">
+                <button class="btn btn-dark" type="submit">Submit Feedback</button>
+            </div>
+        </form>
+        <div>
+            <a href="{% url 'HomeView' %}">Cancel</button>
+        </div>
+    </div>
+
+{% endblock content %}
+
+
+
+{% comment %} Beforea added average {% endcomment %}
 {% extends 'Home/index.html' %} {% block content %}
 
 <h1>Provide Feedback</h1>
-{% if messages %} {% for message in messages %}
-<p class="error_message">{{message}}</p>
-{% endfor %} {% endif %}
+
 <form method="post">
   {% csrf_token %} {{ form.as_p }}
   <button type="submit">Submit</button>

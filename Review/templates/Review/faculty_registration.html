@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{% extends 'Home/index.html' %} {% block content %}
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -11,27 +11,16 @@
       console.log("inside script");
       $(document).ready(function () {
         $("#id_semester").change(function () {
-          console.log("inside func");
           const url = $("#FacultyForm").attr("data-subjects-url");
           const semId = $(this).val();
-          console.log(semId);
 
           $.ajax({
-            // initialize an AJAX request
-            url: url, // set the url of the request (= /persons/ajax/load-cities/ )
+            url: url,
             data: {
-              sem_id: semId, // add the country id to the GET parameters
+              sem_id: semId,
             },
             success: function (data) {
-              console.log(data);
               $("#id_subject").html(data);
-
-              // let html_data = '<option value="">---------</option>';
-              //     data.forEach(function (sub) {
-              //         html_data += `<option value="${sub.id}">${sub.name}</option>`
-              //     });
-              //     console.log(html_data);
-              //     $("#id_subject").html(html_data);
             },
           });
         });
@@ -50,20 +39,109 @@
         align-items: center;
       "
     >
-      <h3>Register</h3>
+      <h3>Register Faculty</h3>
+      <br />
       <form
         id="FacultyForm"
         method="post"
         data-subjects-url="{% url 'ajax_load_subjects' %}"
       >
-        {% csrf_token %} {{ form.as_p }}
+        {% csrf_token %} {% comment %} {{ form.as_p }} {% endcomment %}
+        <table>
+          <tr>
+            <td>
+              <label for="id_name">Name:</label>
+            </td>
+            <td>
+              <input
+                type="text"
+                name="name"
+                maxlength="100"
+                required
+                id="id_name"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label for="id_gmail">Gmail:</label>
+            </td>
+            <td>
+              <input
+                type="text"
+                name="gmail"
+                maxlength="100"
+                required
+                id="id_gmail"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label for="id_password">Password:</label>
+            </td>
+            <td>
+              <input
+                type="password"
+                name="password"
+                maxlength="100"
+                required
+                id="id_password"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td><label for="id_semester">Semester:</label></td>
+            <td>
+              {% comment %} {% for sub in semesters %}
+              <input
+                type="checkbox"
+                name="subject"
+                id="id_subject_{{ sub.pk }}"
+                value="{{ sub.pk }}"
+              />
+              <label for="id_subject_{{ sub.pk }}">{{ sub.name }}</label><br />
+              {% endfor %} {% endcomment %}
+
+              <select name="semester" id="id_semester">
+                <option value="">---------</option>
+                {% for semester in semesters %}
+                <option value="{{ semester.id }}">{{ semester.name }}</option>
+                {% endfor %}
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label for="id_subject">Subject:</label>
+            </td>
+            <td>
+              <select name="subject" id="id_subject">
+                <option value="">---------</option>
+                {% for sub in subjects %}
+                <option value="{{ sub.pk }}">{{ sub.name }}</option>
+                {% endfor %}
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label for="id_batch">Batch:</label>
+            </td>
+            <td>
+              <select name="batch" id="id_batch">
+                <option value="">---------</option>
+                {% for batch in batches %}
+                <option value="{{ batch.0 }}">{{ batch.1 }}</option>
+                {% endfor %}
+              </select>
+            </td>
+          </tr>
+        </table>
+        <br />
         <input type="submit" value="Submit" />
       </form>
     </div>
-
-    <!-- <script>
-    const url = $("#FacultyForm").attr("data-subjects-url");
-    const countryId = $(this).val();
-</script> -->
   </body>
 </html>
+{% endblock content %}

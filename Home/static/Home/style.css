@@ -1,3 +1,11 @@
+.contact {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  margin-left: 100px;
+}
+
 .bg-crimson {
   background-color: #57a7dca6;
 }
@@ -63,13 +71,13 @@ a:hover {
   color: white;
 }
 
-p{
-    font-size: large;
+p {
+  font-size: large;
 }
 
-.about-us{
-    margin-left: 350px;
-    margin-right: 350px;
+.about-us {
+  margin-left: 350px;
+  margin-right: 350px;
 }
 
 .flex {
@@ -117,3 +125,5 @@ p{
 .justify-items-stretch {
   justify-items: stretch;
 }
+
+/* Styling for contact us page */

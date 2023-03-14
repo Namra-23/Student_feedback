@@ -1,12 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
-    Hello I am Testing page... 
-</body>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script>
+      console.log("inside script");
+      $(document).ready(function () {
+        $("#id_semester").change(function () {
+          console.log("inside func");
+          const url = $("#FacultyForm").attr("data-subjects-url");
+          const semId = $(this).val();
+          console.log(semId);
+
+          $.ajax({
+            // initialize an AJAX request
+            url: url, // set the url of the request (= /persons/ajax/load-cities/ )
+            data: {
+              sem_id: semId, // add the country id to the GET parameters
+            },
+            success: function (data) {
+              console.log(data);
+              $("#id_subject").html(data);
+
+              // let html_data = '<option value="">---------</option>';
+              //     data.forEach(function (sub) {
+              //         html_data += `<option value="${sub.id}">${sub.name}</option>`
+              //     });
+              //     console.log(html_data);
+              //     $("#id_subject").html(html_data);
+            },
+          });
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <div
+      class="text-center bgimg form"
+      style="
+        margin-left: 510px;
+        padding: 55px;
+        margin-right: 514px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      "
+    >
+      <h3>Register</h3>
+      <form
+        id="FacultyForm"
+        method="post"
+        data-subjects-url="{% url 'ajax_load_subjects' %}"
+      >
+        {% csrf_token %} {{ form.as_p }}
+        <input type="submit" value="Submit" />
+      </form>
+    </div>
+
+    <!-- <script>
+    const url = $("#FacultyForm").attr("data-subjects-url");
+    const countryId = $(this).val();
+</script> -->
+  </body>
 </html>

@@ -44,8 +44,9 @@ class Faculty(models.Model):
     name=models.CharField(max_length=100)
     gmail=models.CharField(max_length=100)
     password=models.CharField(max_length=100)
-    semester=models.ForeignKey(Semester, on_delete=models.SET_NULL, blank=True, null=True)
-    subject=models.ForeignKey(Subject, on_delete=models.SET_NULL, blank=True, null=True)
+    semester = models.ManyToManyField(Semester)
+    # semester=models.ForeignKey(Semester, on_delete=models.SET_NULL, blank=True, null=True)
+    subject=models.ManyToManyField(Subject)
     batch=models.CharField(verbose_name='batches',max_length=5,choices=BATCH)
     
     # def GetUserByEmail(gmail):
