@@ -14,7 +14,6 @@ from .forms import UserForm,LoginForm
 from django.contrib import messages
 from django.contrib.auth import login,authenticate
 from .models import User,Faculty
-
 from django.http import HttpResponse
 from openpyxl import Workbook
 from Feedback.models import FeedbackData
@@ -211,3 +210,15 @@ def export_to_excel(request):
     wb.save(response)
 
     return response
+
+def Chart(request):
+    labels = []
+    data = []
+    queryset = FeedbackData.objects.order_by('-total')
+    for i in queryset:
+        labels.append(i.total)
+        data.append(i.average)
+    return render(request, 'Review/chart.html',{
+        'labels' : labels,
+        'data' : data
+    })

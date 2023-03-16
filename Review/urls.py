@@ -1,7 +1,7 @@
 from Review.views import export_to_excel
 from . import views
 from django.urls import path
-from .views import   ListFeedbackView, SearchResultsView, deleteAllFeedback, FeedbackDetailView, DeleteFeedbackView, facultyRegister, load_subjects,loginPage,registerPage,FacultyView,FacultyFeedbackList,FacultyFeedback
+from .views import   ListFeedbackView, SearchResultsView, deleteAllFeedback, FeedbackDetailView, DeleteFeedbackView, facultyRegister, load_subjects,loginPage,registerPage,FacultyView,FacultyFeedbackList,FacultyFeedback,Chart
 
 urlpatterns = [
     path('', ListFeedbackView.as_view(), name='ListFeedbackView'),
@@ -19,6 +19,7 @@ urlpatterns = [
     
     path('<int:pk>/', views.faculty_update_view, name='faculty_change'),
     path('ajax/load-subjects/', views.load_subjects, name='ajax_load_subjects'),
-
+    # for chart
+    path('chart/', Chart, name='Chart'),
     path('export-to-excel/', export_to_excel, name='export-to-excel'),
 ]

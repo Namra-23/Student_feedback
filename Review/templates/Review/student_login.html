@@ -1,27 +1,12 @@
 {% extends 'Home/index.html' %} {% block content %}
-<div
-  class="backgrounfdbox"
-  style="margin-top: 10px; margin-left: 575px; margin-right: 575px"
->
+<div class="backgrounfdbox" style="margin-top: 10px; margin-left: 575px; margin-right: 575px">
   <form method="POST">
     {% csrf_token %}
     <legend class="text-center mt-4">Login as Student</legend>
     <br />
-    <input
-      type="email"
-      name="gmail"
-      placeholder="Email...."
-      class="form-control"
-      required
-    />
+    <input type="email" name="gmail" placeholder="Email...." class="form-control" required />
     <br />
-    <input
-      type="password"
-      name="password"
-      placeholder="password"
-      class="form-control"
-      required
-    />
+    <input type="password" name="password" placeholder="password" class="form-control" required />
     <br />
     <button class="btn btn-primary" type="submit">Login</button>
     {% if form.errors %}
