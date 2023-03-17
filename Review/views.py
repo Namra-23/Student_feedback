@@ -26,6 +26,7 @@ class ListFeedbackView(LoginRequiredMixin, ListView):
     ordering = ['-date_submitted']
     paginate_by = 10
 
+
 # For particular Faculty
 class FacultyFeedbackList(ListView):
     
@@ -211,11 +212,20 @@ def export_to_excel(request):
 
     return response
 
+
+
 def Chart(request):
+    # faculty = request.user.name
+    # print(faculty)
+    # feedback_data = FeedbackData.objects.filter(teacher_name=faculty)
+    print("helloooooooooooooo ",FacultyFeedbackList.email)
+    user = Faculty.GetUserByEmail(FacultyFeedbackList.email)
+    object_list = FeedbackData.objects.filter(teacher_name__name__icontains=user.name)
+    object_list = object_list.order_by('-total')
     labels = []
     data = []
-    queryset = FeedbackData.objects.order_by('-total')
-    for i in queryset:
+    # queryset = FeedbackData.objects.order_by('-total')
+    for i in object_list:
         labels.append(i.total)
         data.append(i.average)
     return render(request, 'Review/chart.html',{

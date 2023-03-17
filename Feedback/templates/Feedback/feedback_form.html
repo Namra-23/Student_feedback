@@ -1,12 +1,12 @@
-{% extends 'Home/index.html' %} {% block content %}
-{% load crispy_forms_tags %}
+{% extends 'Home/index.html' %} {% block content %} {% comment %} {% load
+crispy_forms_tags %} {% endcomment %}
 <legend class="text-center mt-4">Feedback Form</legend>
 {% if messages %} {% for message in messages %}
 <p class="error_message">{{message}}</p>
 {% endfor %} {% endif %}
-<form method="post">
-  {% csrf_token %} 
-  {{ form|crispy }}
+<form method="post" class="backgrounfdbox" style="padding-top: 40px">
+  {% csrf_token %} {% comment %} {{ form|crispy }} {% endcomment %}
+  {{form.as_p}}
   <div class="form-group">
     <button class="btn btn-dark" type="submit">Submit Feedback</button>
   </div>
