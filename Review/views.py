@@ -113,7 +113,7 @@ def facultyRegister(request):
                 return JsonResponse({'status': 'error', 'errors': {'email': ['Email or Username already exists.']}})
             else:
                 form.save()
-                return JsonResponse({'status': 'success'})
+                return redirect('FacultyView')
         else:
             return JsonResponse({'status': 'error', 'errors': form.errors})
     else:
