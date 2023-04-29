@@ -19,7 +19,7 @@ from openpyxl import Workbook
 from Feedback.models import FeedbackData
 
 # For all Faculties
-class ListFeedbackView(LoginRequiredMixin, ListView):
+class ListFeedbackView(ListView):
     model = FeedbackData
     template_name = 'Review/list_feedback.html'
     context_object_name = 'feedbacks'
@@ -152,9 +152,14 @@ class SearchResultsView(LoginRequiredMixin, ListView):
         return object_list
 
 # For admin
-class FeedbackDetailView(LoginRequiredMixin, DetailView):
+class FeedbackDetailView(DetailView):
     model = FeedbackData
     template_name = 'Review/detail_feedback.html'
+    context_object_name = 'feedback'
+    
+class FacultyFeedbackDetailView(DetailView):
+    model = FeedbackData
+    template_name = 'Review/faculty_detail_feedback.html'
     context_object_name = 'feedback'
 
 # For faculty
