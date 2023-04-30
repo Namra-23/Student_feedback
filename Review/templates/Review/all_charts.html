@@ -1,0 +1,72 @@
+{% extends 'Home/index.html' %}
+{% block content %} 
+<h2 style= "margin-left:522px;
+            margin-bottom:75px">All feedback chart analysis</h2>
+{% for chart_data in charts_data %}
+<div style="
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 20px;
+">
+  <div style="width: 50%;">
+    <h3 style="margin-left: 50px;">{{ chart_data.teacher_names.0 }}'s Bar Chart</h3>
+    <canvas id="chart_{{ forloop.counter }}" style="padding: 50px; margin-top:50px;"></canvas>
+  </div>
+  <div style="width: 50%; height:500px">
+    <h3 style="margin-left: 50px;">{{ chart_data.teacher_names.0 }}'s Pie Chart</h3>
+    <canvas id="chart2_{{ forloop.counter }}" style="padding: 50px"></canvas>
+  </div>
+</div>
+<hr>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    var ctx = document.getElementById("chart_{{ forloop.counter }}");
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels : {{ chart_data.averages|safe }},
+            datasets: [{
+                label: '{{ chart_data.teacher_names.0 }}',
+                data: [{{ chart_data.averages|join:", " }}],
+                borderWidth: 1
+            }]
+        },
+        options: {
+          responsive: true
+        }
+    });
+
+  var ctx2 = document.getElementById("chart2_{{ forloop.counter }}");
+  new Chart(ctx2, {
+      type: 'pie',
+      data: {
+          datasets: [{
+              label: '{{ chart_data.teacher_names.0 }}',
+              data: [{{ chart_data.averages|join:", " }}],
+              borderWidth: 1
+          }]
+      },
+      options: {
+        responsive: true
+      }
+  });
+</script>
+</div>
+{% endfor %} 
+
+<div class="row pt-3">
+    <a
+      class="btn btn-outline-primary mr-4 col"
+      style="margin-left: 1180px; position: relative; right: 576px"
+      role="button"
+      href="{% url 'ListFeedbackView' %}"
+      >Back to all feedabacks</a
+    >
+
+{% endblock content%}
+
+
+
+

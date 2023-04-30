@@ -17,6 +17,9 @@ from .models import User,Faculty
 from django.http import HttpResponse
 from openpyxl import Workbook
 from Feedback.models import FeedbackData
+from django.shortcuts import render
+from django.db.models import Count
+
 
 # For all Faculties
 class ListFeedbackView(ListView):
@@ -93,7 +96,7 @@ def registerPage(request):
             user = form.cleaned_data.get('name')
             # messages.success(request, "Account is created for " + user)
             
-            return redirect('LoginPage')
+            return redirect('ListFeedbackView')
     
     context = {'form' : form}
     return render(request,'Review/register.html',context)
@@ -113,7 +116,7 @@ def facultyRegister(request):
                 return JsonResponse({'status': 'error', 'errors': {'email': ['Email or Username already exists.']}})
             else:
                 form.save()
-                return redirect('FacultyView')
+                return redirect('ListFeedbackView')
         else:
             return JsonResponse({'status': 'error', 'errors': form.errors})
     else:
@@ -216,6 +219,35 @@ def export_to_excel(request):
     wb.save(response)
 
     return response
+
+# def Allchart(request):
+#     feedbacks = FeedbackData.objects.values('teacher_name__name').annotate(
+#         total=Count('teacher_name__name')
+#     )
+#     teacher_names = []
+#     total_feedbacks = []
+#     for feedback in feedbacks:
+#         teacher_names.append(feedback['teacher_name__name'])
+#         total_feedbacks.append(feedback['total'])
+#         print(feedback['teacher_name__name'])
+#         print(feedback['total'])
+#     context = {
+#         'teacher_names': teacher_names,
+#         'total_feedbacks': total_feedbacks,
+#     }
+#     return render(request, 'Review/all_charts.html', context)
+
+def Allchart(request):
+    feedbacks = FeedbackData.objects.all()
+    context = {}
+    for feedback in feedbacks:
+        teacher_name = feedback.teacher_name.name
+        average = feedback.average
+        if teacher_name not in context:
+            context[teacher_name] = {'teacher_names': [teacher_name], 'averages': [average]}
+        else:
+            context[teacher_name]['averages'].append(average)
+    return render(request, 'Review/all_charts.html', {'charts_data': list(context.values())})
 
 
 

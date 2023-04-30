@@ -1,4 +1,6 @@
 {% extends 'Home/index.html' %} {% block content %}
+<h2 style= "margin-left:522px;
+            margin-bottom:75px">All feedback chart analysis</h2>
 <div
   class="d-flex justify-content-center"
   style="
@@ -16,14 +18,17 @@
   </div>
 </div>
 <div class="row pt-3">
-  <a class="btn btn-outline-primary mr-4 col"  
-  style="margin-left: 1180px;
-          position: relative;
-          right:576px" 
-  role="button" href="{% url 'FacultyFeedbackList' %}">Back to all feedabacks</a>
+  <a
+    class="btn btn-outline-primary mr-4 col"
+    style="margin-left: 1180px; position: relative; right: 576px"
+    role="button"
+    href="{% url 'FacultyFeedbackList' %}"
+    >Back to all feedabacks</a
+  >
 </div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
+  console.log("Inside script")
   const ctx = document.getElementById('myChart');
   const ctx2 = document.getElementById('myBar');
 

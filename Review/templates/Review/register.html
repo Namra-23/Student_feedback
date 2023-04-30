@@ -10,6 +10,9 @@ margin-right: 500px;
     {% csrf_token %}
     {{form.as_p}}
     <input type="submit" name="create User">
+    <div>
+        <a href="{% url 'ListFeedbackView' %}" role="button">Back</a>
+        </div>
 </form>
 </div>
 {% endblock content %}
