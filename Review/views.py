@@ -220,23 +220,6 @@ def export_to_excel(request):
 
     return response
 
-# def Allchart(request):
-#     feedbacks = FeedbackData.objects.values('teacher_name__name').annotate(
-#         total=Count('teacher_name__name')
-#     )
-#     teacher_names = []
-#     total_feedbacks = []
-#     for feedback in feedbacks:
-#         teacher_names.append(feedback['teacher_name__name'])
-#         total_feedbacks.append(feedback['total'])
-#         print(feedback['teacher_name__name'])
-#         print(feedback['total'])
-#     context = {
-#         'teacher_names': teacher_names,
-#         'total_feedbacks': total_feedbacks,
-#     }
-#     return render(request, 'Review/all_charts.html', context)
-
 def Allchart(request):
     feedbacks = FeedbackData.objects.all()
     context = {}
@@ -252,9 +235,6 @@ def Allchart(request):
 
 
 def Chart(request):
-    # faculty = request.user.name
-    # print(faculty)
-    # feedback_data = FeedbackData.objects.filter(teacher_name=faculty)
     print("helloooooooooooooo ",FacultyFeedbackList.email)
     user = Faculty.GetUserByEmail(FacultyFeedbackList.email)
     object_list = FeedbackData.objects.filter(teacher_name__name__icontains=user.name)
